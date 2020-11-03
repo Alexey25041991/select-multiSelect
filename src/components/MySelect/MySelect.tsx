@@ -27,57 +27,67 @@ const MySelect: React.FC<ISelectProps> = ({
 
 
   return (
-    <SelectWrapper width={width} >
-        <Label disabled={false}>
-          {'Город'}
-        </Label>
-        <SelectContainer>
-          <CurrentValue onClick={handleSelectWrapperClick}>
-            <ValueContainerWrapper>
-              <ChipItem>
-                {currentValue ? findOption(options, currentValue).label : 'Не выбрано'}
-                <CloseIconContainer>
-                  <CloseSolidIcon>x</CloseSolidIcon>
-                </CloseIconContainer>
-              </ChipItem>
-              <ChipItemChecbox>+сч.</ChipItemChecbox>
-            </ValueContainerWrapper>
-            <IndicatorsContainerWrapper>
-              <CloseIcon
-                menuIsOpen={opened}
-                disabled={false}
-                // width={30}
-                // height={30}
-              >X</CloseIcon>
-              <ArrowDownIcon
-                menuIsOpen={opened}
-                disabled={false}
-                // width={30}
-                // height={30}
-              />
-            </IndicatorsContainerWrapper>
-          </CurrentValue>
-              {opened && <OptionWrapper>
-                {options.map(
-                  ({ label, value }) => (
-                    <OptionContent
-                      key={value} data-value={value}
-                      onClick={handleOptionClick}
-                    >
-                      <Checkbox>
-                        <input type="checkbox"/>
-                      </Checkbox>
-                      {label}
-                    </OptionContent>
-                  )
-                )}
-              </OptionWrapper>}
+    <SelectWrapper width={width}>
+      <Label disabled={false}>
+        Город
+      </Label>
+
+      <SelectContainer>
+        <CurrentValue onClick={handleSelectWrapperClick}>
+          <ValueContainerWrapper>
+            <ChipItem>
+              {currentValue ? findOption(options, currentValue).label : 'Не выбрано'}
+
+              <CloseIconContainer>
+                <CloseSolidIcon>x</CloseSolidIcon>
+              </CloseIconContainer>
+            </ChipItem>
+            <ChipItemChecbox>+сч.</ChipItemChecbox>
+          </ValueContainerWrapper>
+
+          <IndicatorsContainerWrapper>
+            <CloseIcon
+              menuIsOpen={opened}
+              disabled={false}
+              // width={30}
+              // height={30}
+            >X</CloseIcon>
+
+            <ArrowDownIcon
+              menuIsOpen={opened}
+              disabled={false}
+              // width={30}
+              // height={30}
+            />
+          </IndicatorsContainerWrapper>
+        </CurrentValue>
+
+        {opened && (
+          <OptionWrapper>
+            {options.map(
+              ({ label, value }) => (
+                <OptionContent
+                  key={value}
+                  data-value={value}
+                  onClick={handleOptionClick}
+                >
+                  <Checkbox>
+                    <input type='checkbox' />
+                  </Checkbox>
+
+                  {label}
+                </OptionContent>
+              )
+            )}
+          </OptionWrapper>
+        )}
       </SelectContainer>
+
       <AdditionalText error={false} disabled={false}>
-        {'Место фактического проживания'}
+        Место фактического проживания
       </AdditionalText>
     </SelectWrapper>
-  )
-}
+  );
+};
 
 export default MySelect;

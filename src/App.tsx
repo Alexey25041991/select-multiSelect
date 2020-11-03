@@ -50,9 +50,10 @@ const App = () => {
         <AppStyles />
 
         <AppWrapper>
-          <MySelect 
-            options={options} 
-            value={'Amsterdam'} 
+          <MySelect
+            options={options}
+            value={'Amsterdam'}
+            isMulti
           //   disabled={options[1].checked ? true : false}
           //   clearable={options[0].checked ? true : false}
           //   error={options[2].checked ? true : false}
