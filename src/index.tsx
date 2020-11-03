@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import 'fonts/PFBeauSansPro/style.css';
-import 'antd/dist/antd.css';
 import App from 'App';
 
 

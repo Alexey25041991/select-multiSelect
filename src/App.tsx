@@ -33,14 +33,48 @@ const App = () => {
     },
   ];
 
+  // const optionsList: ICheckboxGroupItem[] = [
+  //   { id: 1, label: 'Clearable', checked: false },
+  //   { id: 2, label: 'Disabled', checked: false },
+  //   { id: 3, label: 'Error', checked: false },
+  //   { id: 4, label: 'Hide label', checked: false },
+  //   { id: 5, label: 'Hide placeholder', checked: false },
+  //   { id: 6, label: 'Add additional text', checked: false },
+  // ];
+  // const [size, setSize] = useState<ICheckboxGroupItem['size']>('big');
+  // const [list, setOptions] = useState<ICheckboxGroupItem[]>(optionsList);
 
   return (
     <>
-      <AppStyles />
+      <div>
+        <AppStyles />
 
-      <AppWrapper>
-        <MySelect options={options} value={'Amsterdam'} />
-      </AppWrapper>
+        <AppWrapper>
+          <MySelect 
+            options={options} 
+            value={'Amsterdam'} 
+          //   disabled={options[1].checked ? true : false}
+          //   clearable={options[0].checked ? true : false}
+          //   error={options[2].checked ? true : false}
+          //   label={options[3].checked ? '' : 'Город'}
+          //   placeholder={options[4].checked ? '' : 'Выберите из списка'}
+          //   additionalText={options[5].checked ? 'Место фактического проживания' : ''}
+          />
+        </AppWrapper>
+      </div>
+      {/* <div>
+        <div>
+          <div
+            onChange={({ value}) => setSize(value)}
+            />
+        </div>
+        <div>
+          <div
+            onChange={(_, list) => {
+              return setOptions(list);
+            } } />
+        </div>
+      </div> */}
     </>
   );
 };
