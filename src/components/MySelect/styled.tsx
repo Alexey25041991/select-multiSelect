@@ -1,3 +1,4 @@
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 // import {ShortArrowDownOutlineIcon} from '../Icons/ShortArrowDownOutlineIcon';
 // import {CloseOutlineIcon} from '../Icons/CloseOutlineIcon';
@@ -64,8 +65,14 @@ export const CurrentValue = styled.div`
   // padding-left: 12px;
 `;
 
-export const ValueContainerWrapper= styled.div`
-align-items: center;
+export const ValueContainerWrapper = styled(forwardRef((props: any, ref: any) => {
+  return (
+    <div ref={ref} {...props}>
+      {props.children}
+    </div>
+  );
+}))`
+  align-items: center;
   box-sizing: border-box;
   display: flex;
   flex: 1;
@@ -75,7 +82,7 @@ align-items: center;
   margin: 0 8px !important;
 `;
 
-export const ChipItem= styled.div`
+export const ChipItemWrapper = styled.div`
   position: relative;
   box-sizing: border-box;
   max-width: 400px;
@@ -85,12 +92,12 @@ export const ChipItem= styled.div`
   height: 24px;
   font-size: 13px;
   padding: 4px 0 4px 9px;
-  margin-right: 8px;  
+  margin-right: 8px;
   display: flex;
   align-items: center;
 `;
 
-export const ChipItemChecbox= styled.div`
+export const ChipItemChecbox = styled.div`
   position: absolute;
   box-sizing: border-box;
   max-width: 400px;
@@ -100,30 +107,34 @@ export const ChipItemChecbox= styled.div`
   height: 24px;
   font-size: 13px;
   padding: 4px 0 4px 9px;
-  margin-right: 8px;  
+  margin-right: 8px;
   display: flex;
   align-items: center;
   right: 0;
 `;
 
-export const CloseIconContainer= styled.div`
+export const CloseIconContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 24px;
   width: 24px;
   border-radius: 50%;
+  cursor: pointer;
   margin-left: 2px;
+
   &:hover {
     background-color: #D8D8D8;
     outline: none;
     cursor: 'default';
   }
+
   &:focus {
     outline: none;
     border: none;
     background-color: #D8D8D8;
   }
+
   &:active {
     outline: none;
     border: none;
@@ -131,7 +142,7 @@ export const CloseIconContainer= styled.div`
   }
 `;
 
-export const CloseSolidIcon= styled.div`
+export const CloseSolidIcon = styled.div`
   background-color: red;
   width: 15px;
   height: 15px;

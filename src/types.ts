@@ -1,13 +1,19 @@
 export interface ISelectProps {
   width?: number;
   options: ISelectItem[];
-  value?: string;
+  initialValue?: string;
   isMulti?: boolean;
 };
 
 export interface ISelectItem {
   label: string;
   value: string;
+};
+
+export interface IChipItemProps {
+  value: string;
+  currentMultiValue: ISelectItem[];
+  setCurrentMultiValue: (value: ISelectItem[]) => void;
 };
 
 

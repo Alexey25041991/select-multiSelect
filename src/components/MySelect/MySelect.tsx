@@ -1,15 +1,28 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+
+import ChipItem from './ChipItem';
 import { ISelectProps, ISelectItem } from 'types';
-import { SelectWrapper, OptionWrapper, OptionContent, CurrentValue, IndicatorsContainerWrapper, ArrowDownIcon, CloseIcon, SelectContainer, Label, AdditionalText, Checkbox, ValueContainerWrapper, ChipItem, ChipItemChecbox, CloseIconContainer, CloseSolidIcon} from './styled';
+import {
+  SelectWrapper, OptionWrapper, OptionContent,
+  CurrentValue, IndicatorsContainerWrapper,
+  ArrowDownIcon, CloseIcon, SelectContainer,
+  Label, AdditionalText, Checkbox, ValueContainerWrapper,
+} from './styled';
+
+
+// Поиск нужной опции среди всех
+const findOption: any = (options: ISelectItem[], value: string) => {
+  return options.filter(opt => opt.value === value)[0];
+};
 
 
 const MySelect: React.FC<ISelectProps> = ({
-  width, options, value
+  width, options, initialValue
 }) => {
-  const findOption = (options: ISelectItem[], value: string) => {
-    return options.filter(opt => opt.value === value)[0];
-  };
+  const valueContainerWrapperRef = useRef();
 
+
+  // Дропдаун открыт/закрыт
 
   const [ opened, setOpened ] = useState<boolean>(false);
 
@@ -18,12 +31,48 @@ const MySelect: React.FC<ISelectProps> = ({
   }, []);
 
 
-  const [ currentValue, setCurrentValue ] = useState<string>(value!);
+  // Текущее значение для multi-селекта
+
+  const [ currentMultiValue, setCurrentMultiValue ] = useState<ISelectItem[]>([ findOption(options, initialValue!) ]);
+
+  const handleRemoveAllClick = useCallback((e) => {
+    e.stopPropagation();
+    setCurrentMultiValue([]);
+  }, []);
 
   const handleOptionClick = useCallback((e) => {
-    setCurrentValue(e.target.dataset.value);
-    setOpened(false);
-  }, []);
+    e.persist();
+
+    if (!findOption(currentMultiValue, e.target.dataset.value)) {
+      setCurrentMultiValue(
+        (currentMultiValue) => [ ...currentMultiValue, findOption(options, e.target.dataset.value) ]
+      );
+    } else {
+      setCurrentMultiValue(
+        (currentMultiValue) => currentMultiValue.filter((opt: any) => opt.value !== e.target.dataset.value)
+      );
+    };
+  }, [ currentMultiValue, options ]);
+
+  useEffect(() => {
+    const availableSpace = (width || 150) - 65;
+
+    const wrapperNode: any = valueContainerWrapperRef.current;
+
+    if (wrapperNode) {
+      const nodesArr = Array.prototype.slice.call(wrapperNode.childNodes ? wrapperNode.childNodes : []);
+      let occupiedWidth = 0;
+
+      nodesArr.map((chip: any) => {
+        if (chip.dataset.isChip) {
+          occupiedWidth += Math.round(chip.getBoundingClientRect().width);
+        };
+      });
+
+      console.log('occupiedWidth', occupiedWidth)
+      console.log('diff', availableSpace - occupiedWidth)
+    };
+  });
 
 
   return (
@@ -34,30 +83,35 @@ const MySelect: React.FC<ISelectProps> = ({
 
       <SelectContainer>
         <CurrentValue onClick={handleSelectWrapperClick}>
-          <ValueContainerWrapper>
-            <ChipItem>
-              {currentValue ? findOption(options, currentValue).label : 'Не выбрано'}
+          <ValueContainerWrapper ref={valueContainerWrapperRef}>
+            {currentMultiValue.length
+              ? currentMultiValue.map(
+                  v => (
+                    <ChipItem
+                      key={v.value} value={v.value} data-is-chip
+                      currentMultiValue={currentMultiValue}
+                      setCurrentMultiValue={setCurrentMultiValue}
+                    >
+                      {findOption(options, v.value).label}
+                    </ChipItem>
+                  )
+                )
+              : <span>Не выбрано</span>
+            }
 
-              <CloseIconContainer>
-                <CloseSolidIcon>x</CloseSolidIcon>
-              </CloseIconContainer>
-            </ChipItem>
-            <ChipItemChecbox>+сч.</ChipItemChecbox>
+            {/* <ChipItemChecbox>+сч.</ChipItemChecbox> */}
           </ValueContainerWrapper>
 
           <IndicatorsContainerWrapper>
             <CloseIcon
+              onClick={handleRemoveAllClick}
               menuIsOpen={opened}
               disabled={false}
-              // width={30}
-              // height={30}
             >X</CloseIcon>
 
             <ArrowDownIcon
               menuIsOpen={opened}
               disabled={false}
-              // width={30}
-              // height={30}
             />
           </IndicatorsContainerWrapper>
         </CurrentValue>
@@ -71,8 +125,8 @@ const MySelect: React.FC<ISelectProps> = ({
                   data-value={value}
                   onClick={handleOptionClick}
                 >
-                  <Checkbox>
-                    <input type='checkbox' />
+                  <Checkbox style={{ pointerEvents: 'none' }}>
+                    <input type='checkbox' checked={!!findOption(currentMultiValue, value)} readOnly />
                   </Checkbox>
 
                   {label}

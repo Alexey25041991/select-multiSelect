@@ -51,18 +51,20 @@ const App = () => {
 
         <AppWrapper>
           <MySelect
+            width={450}
             options={options}
-            value={'Amsterdam'}
-            isMulti
-          //   disabled={options[1].checked ? true : false}
-          //   clearable={options[0].checked ? true : false}
-          //   error={options[2].checked ? true : false}
-          //   label={options[3].checked ? '' : 'Город'}
-          //   placeholder={options[4].checked ? '' : 'Выберите из списка'}
-          //   additionalText={options[5].checked ? 'Место фактического проживания' : ''}
+            initialValue={'Amsterdam'}
+            // isMulti
+            // disabled={options[1].checked ? true : false}
+            // clearable={options[0].checked ? true : false}
+            // error={options[2].checked ? true : false}
+            // label={options[3].checked ? '' : 'Город'}
+            // placeholder={options[4].checked ? '' : 'Выберите из списка'}
+            // additionalText={options[5].checked ? 'Место фактического проживания' : ''}
           />
         </AppWrapper>
       </div>
+
       {/* <div>
         <div>
           <div
