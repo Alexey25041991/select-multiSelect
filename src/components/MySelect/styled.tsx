@@ -63,6 +63,7 @@ export const CurrentValue = styled.div`
   position: absolute;
   display: flex;
   // padding-left: 12px;
+  align-items: center;
 `;
 
 export const ValueContainerWrapper = styled(forwardRef((props: any, ref: any) => {
@@ -80,6 +81,12 @@ export const ValueContainerWrapper = styled(forwardRef((props: any, ref: any) =>
   overflow: hidden;
   position: relative;
   margin: 0 8px !important;
+
+  height: 34px;
+  overflow: hidden
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 40px;
 `;
 
 export const ChipItemWrapper = styled.div`
@@ -92,13 +99,14 @@ export const ChipItemWrapper = styled.div`
   height: 24px;
   font-size: 13px;
   padding: 4px 0 4px 9px;
-  margin-right: 8px;
+  // margin-right: 8px;
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
+  margin: 4px 8px 4px 4px;
 `;
 
 export const ChipItemChecbox = styled.div`
-  position: absolute;
   box-sizing: border-box;
   max-width: 400px;
   color: #242424;
@@ -106,11 +114,12 @@ export const ChipItemChecbox = styled.div`
   border-radius: 14px;
   height: 24px;
   font-size: 13px;
-  padding: 4px 0 4px 9px;
+  padding: 4px 9px 4px 9px;
   margin-right: 8px;
   display: flex;
   align-items: center;
-  right: 0;
+  flex: 0 0 auto;
+  margin-right: -35px;
 `;
 
 export const CloseIconContainer = styled.div`

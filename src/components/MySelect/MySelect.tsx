@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 
 import ChipItem from './ChipItem';
 import { ISelectProps, ISelectItem } from 'types';
@@ -6,7 +6,7 @@ import {
   SelectWrapper, OptionWrapper, OptionContent,
   CurrentValue, IndicatorsContainerWrapper,
   ArrowDownIcon, CloseIcon, SelectContainer,
-  Label, AdditionalText, Checkbox, ValueContainerWrapper,
+  Label, AdditionalText, Checkbox, ValueContainerWrapper, ChipItemChecbox
 } from './styled';
 
 
@@ -25,6 +25,7 @@ const MySelect: React.FC<ISelectProps> = ({
   // Дропдаун открыт/закрыт
 
   const [ opened, setOpened ] = useState<boolean>(false);
+  // const [ counterChip, setCounterChip ] = useState<number>(0);
 
   const handleSelectWrapperClick = useCallback(() => {
     setOpened(opened => !opened);
@@ -54,25 +55,9 @@ const MySelect: React.FC<ISelectProps> = ({
     };
   }, [ currentMultiValue, options ]);
 
-  useEffect(() => {
-    const availableSpace = (width || 150) - 65;
-
-    const wrapperNode: any = valueContainerWrapperRef.current;
-
-    if (wrapperNode) {
-      const nodesArr = Array.prototype.slice.call(wrapperNode.childNodes ? wrapperNode.childNodes : []);
-      let occupiedWidth = 0;
-
-      nodesArr.map((chip: any) => {
-        if (chip.dataset.isChip) {
-          occupiedWidth += Math.round(chip.getBoundingClientRect().width);
-        };
-      });
-
-      console.log('occupiedWidth', occupiedWidth)
-      console.log('diff', availableSpace - occupiedWidth)
-    };
-  });
+  const setCounterChip = (index: number) => {
+    return ' + ' + index
+  };
 
 
   return (
@@ -86,14 +71,17 @@ const MySelect: React.FC<ISelectProps> = ({
           <ValueContainerWrapper ref={valueContainerWrapperRef}>
             {currentMultiValue.length
               ? currentMultiValue.map(
-                  v => (
-                    <ChipItem
-                      key={v.value} value={v.value} data-is-chip
-                      currentMultiValue={currentMultiValue}
-                      setCurrentMultiValue={setCurrentMultiValue}
-                    >
-                      {findOption(options, v.value).label}
-                    </ChipItem>
+                  (v, index) => (
+                    <>
+                      <ChipItemChecbox>{setCounterChip(index)}</ChipItemChecbox>
+                      <ChipItem
+                        key={v.value} value={v.value} data-is-chip
+                        currentMultiValue={currentMultiValue}
+                        setCurrentMultiValue={setCurrentMultiValue}
+                      >
+                        {findOption(options, v.value).label}
+                      </ChipItem>
+                    </>
                   )
                 )
               : <span>Не выбрано</span>
