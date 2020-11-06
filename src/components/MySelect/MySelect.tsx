@@ -15,6 +15,15 @@ const findOption: any = (options: ISelectItem[], value: string) => {
   return options.filter(opt => opt.value === value)[0];
 };
 
+// interface Document {
+//   addEventListener(event: "click", listener: (event: Event) => void, options?: {
+//     passive?: boolean;
+//     once?: boolean;
+//     capture?: boolean;
+//   }      
+// );
+// }
+
 
 const MySelect: React.FC<ISelectProps> = ({
   width, options, initialValue
@@ -59,6 +68,11 @@ const MySelect: React.FC<ISelectProps> = ({
     return ' + ' + index
   };
 
+  // const setOption = (opened) => {
+  //   const body = document.querySelectorAll('body')
+  //   body.addEventListener("click", ()=> {}, true)
+  //   console.log(optionOpened)
+  // };
 
   return (
     <SelectWrapper width={width}>
@@ -73,7 +87,7 @@ const MySelect: React.FC<ISelectProps> = ({
               ? currentMultiValue.map(
                   (v, index) => (
                     <>
-                      <ChipItemChecbox>{setCounterChip(index)}</ChipItemChecbox>
+                      <ChipItemChecbox>{setCounterChip(currentMultiValue.length - index)}</ChipItemChecbox>
                       <ChipItem
                         key={v.value} value={v.value} data-is-chip
                         currentMultiValue={currentMultiValue}
@@ -87,7 +101,6 @@ const MySelect: React.FC<ISelectProps> = ({
               : <span>Не выбрано</span>
             }
 
-            {/* <ChipItemChecbox>+сч.</ChipItemChecbox> */}
           </ValueContainerWrapper>
 
           <IndicatorsContainerWrapper>
