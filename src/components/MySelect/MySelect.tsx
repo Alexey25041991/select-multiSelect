@@ -43,7 +43,7 @@ const MySelect: React.FC<ISelectProps> = ({
 
   // Текущее значение для multi-селекта
 
-  const [ currentMultiValue, setCurrentMultiValue ] = useState<ISelectItem[]>([ findOption(options, initialValue!) ]);
+  const [ currentMultiValue, setCurrentMultiValue ] = useState<ISelectItem[]>([]);
 
   const handleRemoveAllClick = useCallback((e) => {
     e.stopPropagation();
