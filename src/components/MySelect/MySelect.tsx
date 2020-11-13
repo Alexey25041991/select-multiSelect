@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 
 import ChipItem from './ChipItem';
 import { ISelectProps, ISelectItem } from 'types';
@@ -34,7 +34,18 @@ const MySelect: React.FC<ISelectProps> = ({
   // Дропдаун открыт/закрыт
 
   const [ opened, setOpened ] = useState<boolean>(false);
-  // const [ counterChip, setCounterChip ] = useState<number>(0);
+  const [ currentMultiValue, setCurrentMultiValue ] = useState<ISelectItem[]>([]);
+
+  useEffect(() => {
+    const setSelectClose = document.body;
+    document.addEventListener('click', e => {
+      let target: any = e.target;
+      let its_setSelectClose: any = target === setSelectClose;
+      if (its_setSelectClose) {
+        setOpened(false);
+      }
+    })
+  });
 
   const handleSelectWrapperClick = useCallback(() => {
     setOpened(opened => !opened);
@@ -42,8 +53,6 @@ const MySelect: React.FC<ISelectProps> = ({
 
 
   // Текущее значение для multi-селекта
-
-  const [ currentMultiValue, setCurrentMultiValue ] = useState<ISelectItem[]>([]);
 
   const handleRemoveAllClick = useCallback((e) => {
     e.stopPropagation();
@@ -67,12 +76,6 @@ const MySelect: React.FC<ISelectProps> = ({
   const setCounterChip = (index: number) => {
     return ' + ' + index
   };
-
-  // const setOption = (opened) => {
-  //   const body = document.querySelectorAll('body')
-  //   body.addEventListener("click", ()=> {}, true)
-  //   console.log(optionOpened)
-  // };
 
   return (
     <SelectWrapper width={width}>
