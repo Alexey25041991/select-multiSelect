@@ -15,7 +15,16 @@ const ChipItem: React.FC<IChipItemProps> = ({
 }) => {
   const handleRemoveChipClick = useCallback((e) => {
     e.stopPropagation();
-    setCurrentMultiValue(currentMultiValue.filter((opt: any) => opt.value !== e.target.dataset.value));
+    console.log(e.target)
+    setCurrentMultiValue(currentMultiValue.filter((opt: any) => {
+      const { value } = e.target.dataset;
+
+      if (opt.$$typeof) {
+        return opt.props['data-value'] !== value;
+      } else {
+        return opt.value !== value;
+      };
+    }));
   }, [ currentMultiValue, setCurrentMultiValue ]);
 
 

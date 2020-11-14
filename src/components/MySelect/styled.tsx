@@ -105,7 +105,7 @@ export const ChipItemWrapper = styled.div`
   margin: 4px 8px 4px 4px;
 `;
 
-export const ChipItemChecbox = styled.div`
+export const ChipItemCheckbox = styled.div`
   box-sizing: border-box;
   max-width: 400px;
   color: #242424;

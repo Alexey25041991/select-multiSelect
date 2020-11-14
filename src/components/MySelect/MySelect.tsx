@@ -1,42 +1,40 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 
 import ChipItem from './ChipItem';
-import { ISelectProps, ISelectItem } from 'types';
+import { ISelectProps, MyOptions } from 'types';
 import {
   SelectWrapper, OptionWrapper, OptionContent,
   CurrentValue, IndicatorsContainerWrapper,
   ArrowDownIcon, CloseIcon, SelectContainer,
-  Label, AdditionalText, Checkbox, ValueContainerWrapper, ChipItemChecbox
+  Label, AdditionalText, Checkbox, ValueContainerWrapper, ChipItemCheckbox
 } from './styled';
 
 
 // Поиск нужной опции среди всех
-const findOption: any = (options: ISelectItem[], value: string) => {
-  return options.filter(opt => opt.value === value)[0];
+const findOption: any = (options: MyOptions[], value: string) => {
+  // console.log(options, value)
+  return options.filter((opt: any) => {
+    if (opt.$$typeof) {
+      return opt.props['data-value'] === value;
+    } else {
+      return opt.value === value;
+    };
+  })[0];
 };
-
-// interface Document {
-//   addEventListener(event: "click", listener: (event: Event) => void, options?: {
-//     passive?: boolean;
-//     once?: boolean;
-//     capture?: boolean;
-//   }
-// );
-// }
 
 
 const MySelect: React.FC<ISelectProps> = ({
-  width, options, initialValue
+  width, options
 }) => {
+  // Ref to container
   const valueContainerWrapperRef = useRef();
 
-
   // Дропдаун открыт/закрыт
-
   const [ opened, setOpened ] = useState<boolean>(false);
-  const [ currentMultiValue, setCurrentMultiValue ] = useState<ISelectItem[]>([]);
+  const [ currentMultiValue, setCurrentMultiValue ] = useState<MyOptions[]>([]);
 
   // TODO: Вынести в хуки
+  // Click outside select
   useEffect(() => {
     const closeHandler = (e: any) => {
       let target: any = e.target;
@@ -45,40 +43,42 @@ const MySelect: React.FC<ISelectProps> = ({
 
     document.addEventListener('click', closeHandler);
 
-    return () => {
-      document.removeEventListener('click', closeHandler);
+    return () => document.removeEventListener('click', closeHandler);
+  }, []);
+
+  // Show/close dropdown
+  const handleSelectWrapperClick = useCallback(() => setOpened(opened => !opened), []);
+
+  // Select value
+  const handleOptionClick = useCallback((e) => {
+    let { value } = e.currentTarget.dataset
+
+    if (!findOption(currentMultiValue, value)) {
+      setCurrentMultiValue(
+        (currentMultiValue) => [ ...currentMultiValue, findOption(options, value) ]
+      );
+    } else {
+      setCurrentMultiValue(
+        (currentMultiValue) => currentMultiValue.filter((opt: any) => {
+          if (opt.$$typeof) {
+            return opt.props['data-value'] !== value;
+          } else {
+            return opt.value !== value;
+          };
+        })
+      );
     };
-  }, []);
+  }, [ currentMultiValue, options ]);
 
-  const handleSelectWrapperClick = useCallback(() => {
-    setOpened(opened => !opened);
-  }, []);
-
-
-  // Текущее значение для multi-селекта
-
+  // Remove chip
   const handleRemoveAllClick = useCallback((e) => {
     e.stopPropagation();
     setCurrentMultiValue([]);
   }, []);
 
-  const handleOptionClick = useCallback((e) => {
-    e.persist();
+  //
+  const setCounterChip = (index: number) => ' + ' + index;
 
-    if (!findOption(currentMultiValue, e.target.dataset.value)) {
-      setCurrentMultiValue(
-        (currentMultiValue) => [ ...currentMultiValue, findOption(options, e.target.dataset.value) ]
-      );
-    } else {
-      setCurrentMultiValue(
-        (currentMultiValue) => currentMultiValue.filter((opt: any) => opt.value !== e.target.dataset.value)
-      );
-    };
-  }, [ currentMultiValue, options ]);
-
-  const setCounterChip = (index: number) => {
-    return ' + ' + index
-  };
 
   return (
     <SelectWrapper width={width} data-close-border>
@@ -91,22 +91,28 @@ const MySelect: React.FC<ISelectProps> = ({
           <ValueContainerWrapper ref={valueContainerWrapperRef}>
             {currentMultiValue.length
               ? currentMultiValue.map(
-                  (v, index) => (
+                (item: any, i: number) => {
+                  const label = item.$$typeof ? item.props['data-label'] : item.label;
+                  const value = item.$$typeof ? item.props['data-value'] : item.value;
+
+                  return (
                     <>
-                      <ChipItemChecbox>{setCounterChip(currentMultiValue.length - index)}</ChipItemChecbox>
+                      <ChipItemCheckbox key={value + '_'}>
+                        {setCounterChip(currentMultiValue.length - i)}
+                      </ChipItemCheckbox>
+
                       <ChipItem
-                        key={v.value} value={v.value} data-is-chip
+                        key={value} value={value} data-is-chip
                         currentMultiValue={currentMultiValue}
                         setCurrentMultiValue={setCurrentMultiValue}
                       >
-                        {findOption(options, v.value).label}
+                        {label}
                       </ChipItem>
                     </>
-                  )
-                )
-              : <span>Не выбрано</span>
+                  );
+                }
+              ) : <span>Не выбрано</span>
             }
-
           </ValueContainerWrapper>
 
           <IndicatorsContainerWrapper>
@@ -127,19 +133,38 @@ const MySelect: React.FC<ISelectProps> = ({
         {opened && (
           <OptionWrapper>
             {options.map(
-              ({ label, value }) => (
-                <OptionContent
-                  key={value}
-                  data-value={value}
-                  onClick={handleOptionClick}
-                >
-                  <Checkbox style={{ pointerEvents: 'none' }}>
-                    <input type='checkbox' checked={!!findOption(currentMultiValue, value)} readOnly />
-                  </Checkbox>
+              (item: any, i: number) => {
+                if (item.$$typeof) {
+                  return (
+                    <div
+                      key={i}
+                      data-wrapper
+                      data-value={item.props['data-value']}
+                      onClick={handleOptionClick}
+                    >
+                      <Checkbox style={{ pointerEvents: 'none' }}>
+                        <input type='checkbox' checked={!!findOption(currentMultiValue, item.props['data-value'])} readOnly />
+                      </Checkbox>
 
-                  {label}
-                </OptionContent>
-              )
+                      {item}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <OptionContent
+                      key={item.value}
+                      data-value={item.value}
+                      onClick={handleOptionClick}
+                    >
+                      <Checkbox style={{ pointerEvents: 'none' }}>
+                        <input type='checkbox' checked={!!findOption(currentMultiValue, item.value)} readOnly />
+                      </Checkbox>
+
+                      {item.label}
+                    </OptionContent>
+                  );
+                };
+              }
             )}
           </OptionWrapper>
         )}
