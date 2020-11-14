@@ -20,7 +20,7 @@ const findOption: any = (options: ISelectItem[], value: string) => {
 //     passive?: boolean;
 //     once?: boolean;
 //     capture?: boolean;
-//   }      
+//   }
 // );
 // }
 
@@ -36,16 +36,19 @@ const MySelect: React.FC<ISelectProps> = ({
   const [ opened, setOpened ] = useState<boolean>(false);
   const [ currentMultiValue, setCurrentMultiValue ] = useState<ISelectItem[]>([]);
 
+  // TODO: Вынести в хуки
   useEffect(() => {
-    const setSelectClose = document.body;
-    document.addEventListener('click', e => {
+    const closeHandler = (e: any) => {
       let target: any = e.target;
-      let its_setSelectClose: any = target === setSelectClose;
-      if (its_setSelectClose) {
-        setOpened(false);
-      }
-    })
-  });
+      if (!target.closest('[data-close-border]')) setOpened(false);
+    };
+
+    document.addEventListener('click', closeHandler);
+
+    return () => {
+      document.removeEventListener('click', closeHandler);
+    };
+  }, []);
 
   const handleSelectWrapperClick = useCallback(() => {
     setOpened(opened => !opened);
@@ -78,7 +81,7 @@ const MySelect: React.FC<ISelectProps> = ({
   };
 
   return (
-    <SelectWrapper width={width}>
+    <SelectWrapper width={width} data-close-border>
       <Label disabled={false}>
         Город
       </Label>
@@ -116,6 +119,7 @@ const MySelect: React.FC<ISelectProps> = ({
             <ArrowDownIcon
               menuIsOpen={opened}
               disabled={false}
+              data-close
             />
           </IndicatorsContainerWrapper>
         </CurrentValue>

@@ -19,7 +19,8 @@ export const AppStyles = createGlobalStyle`
 `;
 
 export const AppWrapper = styled.div`
-  margin-top: 200px;
+  height: 100vh;
+  padding-top: 100px;
   display: flex;
   justify-content: center;
 `;

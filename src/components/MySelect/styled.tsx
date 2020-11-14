@@ -18,9 +18,8 @@ interface IIconProps {
 
 export const SelectWrapper = styled.div<ISelectWrapperProps>`
   width: ${props => props.width ? props.width : 320}px;
-  // border: 1px solid #000;
   position: relative;
-  height: 56px;
+  height: 120px;
 }
 `;
 
