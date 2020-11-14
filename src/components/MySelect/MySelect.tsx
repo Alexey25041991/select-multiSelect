@@ -11,9 +11,8 @@ import {
 
 
 // Поиск нужной опции среди всех
-const findOption: any = (options: MyOptions[], value: string) => {
-  // console.log(options, value)
-  return options.filter((opt: any) => {
+const findOption: any = (list: MyOptions[], value: string) => {
+  return list.filter((opt: any) => {
     if (opt.$$typeof) {
       return opt.props['data-value'] === value;
     } else {
@@ -24,14 +23,15 @@ const findOption: any = (options: MyOptions[], value: string) => {
 
 
 const MySelect: React.FC<ISelectProps> = ({
-  width, options
+  width, options, initialValue
 }) => {
   // Ref to container
   const valueContainerWrapperRef = useRef();
-
+  const initialValueOptions = initialValue ? initialValue : [];
+  const list = [...options, ...initialValueOptions];
   // Дропдаун открыт/закрыт
   const [ opened, setOpened ] = useState<boolean>(false);
-  const [ currentMultiValue, setCurrentMultiValue ] = useState<MyOptions[]>([]);
+  const [ currentMultiValue, setCurrentMultiValue ] = useState<MyOptions[]>(initialValueOptions);
 
   // TODO: Вынести в хуки
   // Click outside select
@@ -55,7 +55,7 @@ const MySelect: React.FC<ISelectProps> = ({
 
     if (!findOption(currentMultiValue, value)) {
       setCurrentMultiValue(
-        (currentMultiValue) => [ ...currentMultiValue, findOption(options, value) ]
+        (currentMultiValue) => [ ...currentMultiValue, findOption(list, value) ]
       );
     } else {
       setCurrentMultiValue(
@@ -68,7 +68,7 @@ const MySelect: React.FC<ISelectProps> = ({
         })
       );
     };
-  }, [ currentMultiValue, options ]);
+  }, [ currentMultiValue, list ]);
 
   // Remove chip
   const handleRemoveAllClick = useCallback((e) => {
@@ -132,7 +132,7 @@ const MySelect: React.FC<ISelectProps> = ({
 
         {opened && (
           <OptionWrapper>
-            {options.map(
+            {list.map(
               (item: any, i: number) => {
                 if (item.$$typeof) {
                   return (

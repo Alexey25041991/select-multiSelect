@@ -4,6 +4,7 @@ import MySelect from 'components/MySelect';
 import {
   objDataArr,
   // nodesDataArr,
+  objDataArr1
 } from './consts';
 import { AppStyles, AppWrapper } from './App.styled';
 
@@ -17,7 +18,7 @@ const App = () => (
         <MySelect
           width={450}
           options={objDataArr}
-          initialValue='Amsterdam'
+          initialValue={objDataArr1}
         />
       </AppWrapper>
     </div>

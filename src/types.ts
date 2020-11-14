@@ -8,7 +8,7 @@ export type MyOptions = ISelectItem | React.ReactNode;
 export interface ISelectProps {
   width?: number;
   options: MyOptions[];
-  initialValue?: string;
+  initialValue?: MyOptions[];
   isMulti?: boolean;
 };
 
