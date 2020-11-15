@@ -28,7 +28,9 @@ const MySelect: React.FC<ISelectProps> = ({
   // Ref to container
   const valueContainerWrapperRef = useRef();
   const initialValueOptions = initialValue ? initialValue : [];
-  const list = [...options, ...initialValueOptions];
+  const list1 = [...options, ...initialValueOptions];
+  const list = list1.reduce((st: any, el: any) => (st.map((e: { value: any; }) => e.value)).includes(el.value) ? st : [...st, el],[])
+
   // Дропдаун открыт/закрыт
   const [ opened, setOpened ] = useState<boolean>(false);
   const [ currentMultiValue, setCurrentMultiValue ] = useState<MyOptions[]>(initialValueOptions);

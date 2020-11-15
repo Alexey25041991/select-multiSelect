@@ -32,6 +32,14 @@ export const objDataArr: MyOptions[] = [
 
 export const objDataArr1: MyOptions[] = [
   {
+    label: 'Париж',
+    value: 'Paris',
+  },
+  {
+    label: 'Москва',
+    value: 'Moscow',
+  },
+  {
     label: 'Смоленск',
     value: 'Smolensk',
   },
