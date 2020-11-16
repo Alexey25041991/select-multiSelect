@@ -217,6 +217,7 @@ export const OptionWrapper = styled.div`
   border: 1px solid #D8D8D8;
   min-height: 100px;
   cursor: pointer;
+  overflow-y: auto;
 
   align-items: center;
   margin-top: 5px;
