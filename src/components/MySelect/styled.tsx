@@ -16,6 +16,10 @@ interface IIconProps {
   size?: number;
 }
 
+interface IIconProps1 {
+  dropdownListBorders: boolean;
+}
+
 export const SelectWrapper = styled.div<ISelectWrapperProps>`
   width: ${props => props.width ? props.width : 320}px;
   position: relative;
@@ -209,7 +213,7 @@ export const CloseIcon = styled.div<IIconProps>`
     commonIconStyles(disabled, menuIsOpen)}
 `;
 
-export const OptionWrapper = styled.div`
+export const OptionWrapper = styled.div<IIconProps1>`
   position: absolute;
   width: 100%;
   top: 100%;
@@ -232,6 +236,12 @@ export const OptionWrapper = styled.div`
     background-color: #f0f5f7;
     color: #7E7E7E;
   }
+  ${({ dropdownListBorders }) =>
+  dropdownListBorders &&
+  css`
+    top: auto;
+    bottom: 40px;
+  `}
 `;
 
 export const OptionContent = styled.div`

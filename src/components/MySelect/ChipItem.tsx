@@ -8,7 +8,7 @@ import {
 
 
 const ChipItem: React.FC<IChipItemProps> = ({
-  children, value,
+  children, value, disabled,
   currentMultiValue,
   setCurrentMultiValue,
   ...restProps

@@ -33,11 +33,47 @@ const MySelect: React.FC<ISelectProps> = ({
 
   // Дропдаун открыт/закрыт
   const [ opened, setOpened ] = useState<boolean>(false);
+  const [ dropdownListBorders, setDropdownListMoveBorders ] = useState<boolean>(false);
   const [ currentMultiValue, setCurrentMultiValue ] = useState<MyOptions[]>(initialValueOptions);
 
   // TODO: Вынести в хуки
   // Click outside select
   useEffect(() => {
+    // console.log(111, document.getElementById('OptionWrapper'));
+    const a = document.getElementById('OptionWrapper');
+    const b = document.documentElement.clientHeight
+    // console.log(222, a)
+    // console.log('Height', b)
+
+    if(a) {
+      const getCoords = (a: any , b: any) => {
+        let box = a.getBoundingClientRect();
+        const top = box.top
+        const bottom = box.top + box.height;
+        const bottomHeightBorder = b - bottom
+        const bottomHeight = b - box.top 
+
+        const bottomSwitch = Math.abs(top) > Math.abs(bottomHeight);
+        if(bottomHeightBorder < 0 ) {
+          setDropdownListMoveBorders(true);
+        } 
+
+        if(bottomHeightBorder - 61 > box.height) {
+          setDropdownListMoveBorders(false);
+        } 
+        // else {setDropdownListMoveBorders(false)}
+
+        return {
+          top: top,
+          bottom: bottom,
+          bottomHeightBorder: bottomHeightBorder,
+          bottomHeight: bottomHeight,
+          bottomSwitch: bottomSwitch,
+        };
+      }
+      console.log(333, getCoords(a, b))
+    }
+
     const closeHandler = (e: any) => {
       let target: any = e.target;
       if (!target.closest('[data-close-border]')) setOpened(false);
@@ -46,7 +82,7 @@ const MySelect: React.FC<ISelectProps> = ({
     document.addEventListener('click', closeHandler);
 
     return () => document.removeEventListener('click', closeHandler);
-  }, []);
+  });
 
   // Show/close dropdown
   const handleSelectWrapperClick = useCallback(() => setOpened(opened => !opened), []);
@@ -105,6 +141,7 @@ const MySelect: React.FC<ISelectProps> = ({
 
                       <ChipItem
                         key={value} value={value} data-is-chip
+                        disabled={false}
                         currentMultiValue={currentMultiValue}
                         setCurrentMultiValue={setCurrentMultiValue}
                       >
@@ -133,7 +170,7 @@ const MySelect: React.FC<ISelectProps> = ({
         </CurrentValue>
 
         {opened && (
-          <OptionWrapper>
+          <OptionWrapper id="OptionWrapper" dropdownListBorders={dropdownListBorders}>
             {list.map(
               (item: any, i: number) => {
                 if (item.$$typeof) {

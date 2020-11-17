@@ -14,6 +14,7 @@ export interface ISelectProps {
 
 export interface IChipItemProps {
   value: string;
+  disabled?: boolean;
   currentMultiValue: MyOptions[];
   setCurrentMultiValue: (value: MyOptions[]) => void;
 };
