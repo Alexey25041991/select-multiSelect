@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, Fragment } from 'react';
 
 import ChipItem from './ChipItem';
 import { ISelectProps, MyOptions } from 'types';
@@ -134,7 +134,7 @@ const MySelect: React.FC<ISelectProps> = ({
                   const value = item.$$typeof ? item.props['data-value'] : item.value;
 
                   return (
-                    <>
+                    <Fragment key={value}>
                       <ChipItemCheckbox key={value + '_'}>
                         {setCounterChip(currentMultiValue.length - i)}
                       </ChipItemCheckbox>
@@ -147,7 +147,7 @@ const MySelect: React.FC<ISelectProps> = ({
                       >
                         {label}
                       </ChipItem>
-                    </>
+                    </Fragment>
                   );
                 }
               ) : <span>Не выбрано</span>
