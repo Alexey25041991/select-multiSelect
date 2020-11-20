@@ -20,18 +20,20 @@ export interface IChipItemProps {
 };
 
 export interface IInpitProps {
-  disabled?: boolean;
-  currentMultiValue: MyOptions[];
-  initialValueOptions: MyOptions[];
-  setCurrentMultiValue: (value: MyOptions[]) => void;
-  setOpened: (opened: any) => void;
-  opened?: boolean;
+  inputProps: {
+    disabled?: boolean;
+    currentMultiValue: MyOptions[];
+    initialValueOptions: MyOptions[];
+    setCurrentMultiValue: (value: MyOptions[]) => void;
+    opened?: boolean;
+  };
 };
 
 export interface IDropdownListProps {
   disabled?: boolean;
   list: MyOptions[];
   currentMultiValue: MyOptions[];
+  setOpened: (opened: any) => void;
   setCurrentMultiValue: (value: (currentMultiValue: any) => any[]) => void;
 };
 

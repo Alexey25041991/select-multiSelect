@@ -19,6 +19,7 @@ const DropdownList: FC<IDropdownListProps> = ({
   list,
   currentMultiValue,
   setCurrentMultiValue,
+  setOpened,
 }) => {
 
   const [ dropdownListBorders, setDropdownListMoveBorders ] = useState<boolean>(false);
@@ -58,6 +59,7 @@ useEffect(() => {
 
 const handleOptionClick = useCallback((e) => {
   let { value } = e.currentTarget.dataset
+  setOpened(false);
 
   if (!findOption(currentMultiValue, value)) {
     setCurrentMultiValue(
