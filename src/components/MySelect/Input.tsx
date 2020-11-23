@@ -16,6 +16,7 @@ const Input: FC<IInpitProps> = (
     const setCounterChip = (index: number) => ' + ' + index;
 
     const handleRemoveAllClick = useCallback((e) => {
+      inputProps.onChange?.([])
       e.stopPropagation();
       inputProps.setCurrentMultiValue([]);
     }, []);
@@ -42,6 +43,7 @@ const Input: FC<IInpitProps> = (
                       disabled={false}
                       currentMultiValue={inputProps.currentMultiValue}
                       setCurrentMultiValue={inputProps.setCurrentMultiValue}
+                      onChange={inputProps.onChange}
                     >
                     {label}
                     </ChipItem>

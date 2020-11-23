@@ -10,12 +10,12 @@ import {
 } from './styled';
 
 const MySelect: React.FC<ISelectProps> = ({
-  width, options, initialValue
+  width, options, initialValue, onChange
 }) => {
   // Ref to container
   const initialValueOptions = initialValue ? initialValue : [];
-  const list1 = [...options, ...initialValueOptions];
-  const list = list1.reduce((st: any, el: any) => (st.map((e: { value: any; }) => e.value)).includes(el.value) ? st : [...st, el],[])
+  const list = [...options, ...initialValueOptions];
+  // const list = list1.reduce((st: any, el: any) => (st.map((e: { value: any; }) => e.value)).includes(el.value) ? st : [...st, el],[])
 
   // Дропдаун открыт/закрыт
   const [ opened, setOpened ] = useState<boolean>(false);
@@ -24,6 +24,7 @@ const MySelect: React.FC<ISelectProps> = ({
   // TODO: Вынести в хуки
   // Click outside select
   useEffect(() => {
+    // onChange?.(currentMultiValue);
     const closeHandler = (e: any) => {
       let target: any = e.target;
       if (!target.closest('[data-close-border]')) setOpened(false);
@@ -43,6 +44,7 @@ const MySelect: React.FC<ISelectProps> = ({
     currentMultiValue,
     setCurrentMultiValue,
     opened,
+    onChange,
   }
 
   // @ts-ignore
@@ -54,7 +56,7 @@ const MySelect: React.FC<ISelectProps> = ({
 
       <SelectContainer onClick={handleSelectWrapperClick}>
 
-        <Input inputProps = {inputProps} />
+        <Input inputProps = {inputProps}/>
 
         {opened && (
           <DropdownList
@@ -62,6 +64,7 @@ const MySelect: React.FC<ISelectProps> = ({
             currentMultiValue={currentMultiValue}
             setCurrentMultiValue={setCurrentMultiValue}
             setOpened={setOpened}
+            onChange={onChange}
           />
         )}
       </SelectContainer>

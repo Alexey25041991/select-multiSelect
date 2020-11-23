@@ -10,6 +10,7 @@ export interface ISelectProps {
   options: MyOptions[];
   initialValue?: MyOptions[];
   isMulti?: boolean;
+  onChange?: (value: any) => void;
 };
 
 export interface IChipItemProps {
@@ -17,6 +18,7 @@ export interface IChipItemProps {
   disabled?: boolean;
   currentMultiValue: MyOptions[];
   setCurrentMultiValue: (value: MyOptions[]) => void;
+  onChange?: (value: any) => void;
 };
 
 export interface IInpitProps {
@@ -26,6 +28,7 @@ export interface IInpitProps {
     initialValueOptions: MyOptions[];
     setCurrentMultiValue: (value: MyOptions[]) => void;
     opened?: boolean;
+    onChange?: (value: any) => void;
   };
 };
 
@@ -35,5 +38,6 @@ export interface IDropdownListProps {
   currentMultiValue: MyOptions[];
   setOpened: (opened: any) => void;
   setCurrentMultiValue: (value: (currentMultiValue: any) => any[]) => void;
+  onChange?: (value: any) => void;
 };
 

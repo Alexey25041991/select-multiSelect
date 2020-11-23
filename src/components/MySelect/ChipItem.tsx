@@ -5,26 +5,24 @@ import {
   ChipItemWrapper, CloseIconContainer, CloseSolidIcon
 } from './styled';
 
+import { removeOption } from './DropdownList'
+
 
 
 const ChipItem: React.FC<IChipItemProps> = ({
   children, value, disabled,
   currentMultiValue,
   setCurrentMultiValue,
+  onChange,
   ...restProps
 }) => {
   const handleRemoveChipClick = useCallback((e) => {
+    const { value } = e.currentTarget.dataset;
     e.stopPropagation();
-    console.log(e.target)
-    setCurrentMultiValue(currentMultiValue.filter((opt: any) => {
-      const { value } = e.target.dataset;
 
-      if (opt.$$typeof) {
-        return opt.props['data-value'] !== value;
-      } else {
-        return opt.value !== value;
-      };
-    }));
+    onChange?.(removeOption(currentMultiValue, value))
+
+    setCurrentMultiValue(removeOption(currentMultiValue, value));
   }, [ currentMultiValue, setCurrentMultiValue ]);
 
 

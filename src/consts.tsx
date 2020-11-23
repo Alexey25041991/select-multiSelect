@@ -31,23 +31,23 @@ export const objDataArr: MyOptions[] = [
 ];
 
 export const objDataArr1: MyOptions[] = [
-  {
-    label: 'Париж',
-    value: 'Paris',
-  },
-  {
-    label: 'Москва',
-    value: 'Moscow',
-  },
+  // {
+  //   label: 'Париж',
+  //   value: 'Paris',
+  // },
+  // {
+  //   label: 'Москва',
+  //   value: 'Moscow',
+  // },
   {
     label: 'Смоленск',
     value: 'Smolensk',
   },
   <div data-value='sohi' data-label='Сочи'>Сочи <img src={'https://via.placeholder.com/30x30'} alt='' /></div>,
-  {
-    label: 'Питер',
-    value: 'Piter',
-  },
+  // {
+  //   label: 'Питер',
+  //   value: 'Piter',
+  // },
 ];
 
 export const nodesDataArr: MyOptions[] = [

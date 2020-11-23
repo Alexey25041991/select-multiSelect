@@ -19,6 +19,7 @@ const App = () => (
           width={450}
           options={objDataArr}
           initialValue={objDataArr1}
+          onChange={(value) => console.log('Value from changed input', value)}
         />
       </AppWrapper>
     </div>

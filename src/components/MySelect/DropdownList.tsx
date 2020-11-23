@@ -15,11 +15,22 @@ const findOption: any = (list: MyOptions[], value: string) => {
   })[0];
 };
 
+export const removeOption: any = (list: MyOptions[], value: string) => {
+  return list.filter((opt: any) => {
+    if (opt.$$typeof) {
+      return opt.props['data-value'] !== value;
+    } else {
+      return opt.value !== value;
+    };
+  });
+};
+
 const DropdownList: FC<IDropdownListProps> = ({
   list,
   currentMultiValue,
   setCurrentMultiValue,
   setOpened,
+  onChange,
 }) => {
 
   const [ dropdownListBorders, setDropdownListMoveBorders ] = useState<boolean>(false);
@@ -53,27 +64,31 @@ useEffect(() => {
           bottomSwitch: bottomSwitch,
         };
       }
-      console.log('???getCoords', getCoords(a, b))
+      // console.log('???getCoords', getCoords(a, b))
     }
 });
 
 const handleOptionClick = useCallback((e) => {
   let { value } = e.currentTarget.dataset
   setOpened(false);
+  // console.log(1, currentMultiValue)
+  // console.log(2, findOption(list, value))
+  // console.log(3, !findOption(currentMultiValue, value))
+  // console.log(4, [...currentMultiValue, findOption(list, value)])
+  // const valueOption = [...currentMultiValue, findOption(list, value)]
+
+  // onChange?.([...currentMultiValue, findOption(list, value)]);
 
   if (!findOption(currentMultiValue, value)) {
+    onChange?.([...currentMultiValue, findOption(list, value)]);
     setCurrentMultiValue(
       (currentMultiValue) => [ ...currentMultiValue, findOption(list, value) ]
     );
   } else {
+    onChange?.(removeOption(currentMultiValue, value))
+
     setCurrentMultiValue(
-      (currentMultiValue) => currentMultiValue.filter((opt: any) => {
-        if (opt.$$typeof) {
-          return opt.props['data-value'] !== value;
-        } else {
-          return opt.value !== value;
-        };
-      })
+      (currentMultiValue) => removeOption(currentMultiValue, value)
     );
   };
 }, [currentMultiValue, list, setCurrentMultiValue]);
