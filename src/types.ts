@@ -1,6 +1,7 @@
 export interface ISelectItem {
   label: string;
-  value: string;
+  value: string | number ;
+  icon?: any;
 };
 
 export type MyOptions = ISelectItem | React.ReactNode;
@@ -10,11 +11,17 @@ export interface ISelectProps {
   options: MyOptions[];
   initialValue?: MyOptions[];
   isMulti?: boolean;
+  menuOpenAndClose?: boolean;
+  className?: string;
   onChange?: (value: any) => void;
+   /** Коллбек на изменение блюр */
+   onBlur?: (e: FocusEvent) => void;
+   /** Коллбек на изменение focus */
+   onFocus?: (event: FocusEvent) => void;
 };
 
 export interface IChipItemProps {
-  value: string;
+  value: string | number;
   disabled?: boolean;
   currentMultiValue: MyOptions[];
   setCurrentMultiValue: (value: MyOptions[]) => void;
@@ -34,10 +41,25 @@ export interface IInpitProps {
 
 export interface IDropdownListProps {
   disabled?: boolean;
+  opened: boolean;
+  dropdownListBorders: boolean;
   list: MyOptions[];
   currentMultiValue: MyOptions[];
   setOpened: (opened: any) => void;
   setCurrentMultiValue: (value: (currentMultiValue: any) => any[]) => void;
   onChange?: (value: any) => void;
+     /** Коллбек на изменение блюр */
+     onBlur?: (e: FocusEvent) => void;
+     /** Коллбек на изменение focus */
+     onFocus?: (event: FocusEvent) => void;
 };
+
+export interface ICheckboxGroupItem {
+  /** Уникальный идентификатор чекбокса */
+  id: string | number;
+  /** Подпись к чекбоксу */
+  label: string;
+  /** Состояние чекбокса: выбран/не выбран */
+  checked?: boolean;
+}
 

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { IChipItemProps } from 'types';
 import {
-  ChipItemWrapper, CloseIconContainer, CloseSolidIcon
+  ChipItemWrapper, CloseIconContainer, CloseSolidIcon, ChipItemLabel
 } from './styled';
 
 import { removeOption } from './DropdownList'
@@ -28,7 +28,7 @@ const ChipItem: React.FC<IChipItemProps> = ({
 
   return (
     <ChipItemWrapper {...restProps}>
-      {children}
+      <ChipItemLabel>{children}</ChipItemLabel>
 
       <CloseIconContainer>
         <CloseSolidIcon

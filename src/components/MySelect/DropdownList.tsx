@@ -7,20 +7,22 @@ import {  OptionWrapper, OptionContent, Checkbox, } from './styled';
 
 const findOption: any = (list: MyOptions[], value: string) => {
   return list.filter((opt: any) => {
+    const valueOptions = typeof opt.value === 'number' ? parseFloat(value) : value;
     if (opt.$$typeof) {
       return opt.props['data-value'] === value;
     } else {
-      return opt.value === value;
+      return opt.value === valueOptions;
     };
   })[0];
 };
 
 export const removeOption: any = (list: MyOptions[], value: string) => {
   return list.filter((opt: any) => {
+    const valueOptions = typeof opt.value === 'number' ? parseFloat(value) : value;
     if (opt.$$typeof) {
       return opt.props['data-value'] !== value;
     } else {
-      return opt.value !== value;
+      return opt.value !== valueOptions;
     };
   });
 };
@@ -31,53 +33,13 @@ const DropdownList: FC<IDropdownListProps> = ({
   setCurrentMultiValue,
   setOpened,
   onChange,
+  dropdownListBorders,
+  opened,
 }) => {
-
-  const [ dropdownListBorders, setDropdownListMoveBorders ] = useState<boolean>(false);
-
-useEffect(() => {
-    const a = document.getElementById('OptionWrapper');
-    const b = document.documentElement.clientHeight
-
-    if(a) {
-      const getCoords = (a: any , b: any) => {
-        let box = a.getBoundingClientRect();
-        const top = box.top
-        const bottom = box.top + box.height;
-        const bottomHeightBorder = b - bottom
-        const bottomHeight = b - box.top 
-
-        const bottomSwitch = Math.abs(top) > Math.abs(bottomHeight);
-        if(bottomHeightBorder < 0 ) {
-          setDropdownListMoveBorders(true);
-        } 
-
-        if(bottomHeightBorder - 61 > box.height) {
-          setDropdownListMoveBorders(false);
-        } 
-
-        return {
-          top: top,
-          bottom: bottom,
-          bottomHeightBorder: bottomHeightBorder,
-          bottomHeight: bottomHeight,
-          bottomSwitch: bottomSwitch,
-        };
-      }
-      // console.log('???getCoords', getCoords(a, b))
-    }
-});
 
 const handleOptionClick = useCallback((e) => {
   let { value } = e.currentTarget.dataset
   setOpened(false);
-  // console.log(1, currentMultiValue)
-  // console.log(2, findOption(list, value))
-  // console.log(3, !findOption(currentMultiValue, value))
-  // console.log(4, [...currentMultiValue, findOption(list, value)])
-  // const valueOption = [...currentMultiValue, findOption(list, value)]
-
-  // onChange?.([...currentMultiValue, findOption(list, value)]);
 
   if (!findOption(currentMultiValue, value)) {
     onChange?.([...currentMultiValue, findOption(list, value)]);
@@ -91,12 +53,12 @@ const handleOptionClick = useCallback((e) => {
       (currentMultiValue) => removeOption(currentMultiValue, value)
     );
   };
-}, [currentMultiValue, list, setCurrentMultiValue]);
+}, [currentMultiValue, list, onChange, setCurrentMultiValue, setOpened]);
 
 const setOptionContent = (item: any, i: number) => {
     const itemType = item.$$typeof ? item.props['data-value'] : item.value
     const itemLabel = item.$$typeof ? item : item.label
-    const key = item.$$typeof ? i : item.value
+    const key = item.$$typeof ? (Math.random() * 1000).toString(16) : item.value
     return (
       <OptionContent
         key={key}
@@ -111,9 +73,22 @@ const setOptionContent = (item: any, i: number) => {
     )
   }
 
+  const onBlur = (e: any) => {
+    console.log(e.currentTarget)
+    if (e.currentTarget === e.target) {
+      console.log('фокус на родительском элементе снят');
+    } else {
+      console.log('фокус на дочернем элементе снят', e.target);
+    }
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      // Не срабатывает при перемещении фокуса между дочерними элементами
+      console.log('фокус потерян изнутри родительского элемента');
+    }
+  };
+
 
   return (
-    <OptionWrapper id="OptionWrapper" dropdownListBorders={dropdownListBorders}>
+    <OptionWrapper id="OptionWrapper" opened={opened} dropdownListBorders={dropdownListBorders} onBlur={onBlur}>
         {list.map(
             (item: any, i: number) => setOptionContent(item, i)
         )}

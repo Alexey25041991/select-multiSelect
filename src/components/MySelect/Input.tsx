@@ -9,16 +9,22 @@ import {
 import ChipItem from './ChipItem';
 
 const Input: FC<IInpitProps> = (
-  {inputProps}
+  {inputProps: {
+    initialValueOptions,
+    currentMultiValue,
+    setCurrentMultiValue,
+    opened,
+    onChange,
+  }}
 ) => {
     const valueContainerWrapperRef = useRef();
 
     const setCounterChip = (index: number) => ' + ' + index;
 
     const handleRemoveAllClick = useCallback((e) => {
-      inputProps.onChange?.([])
+      onChange?.([])
       e.stopPropagation();
-      inputProps.setCurrentMultiValue([]);
+      setCurrentMultiValue([]);
     }, []);
 
     // const handleSelectWrapperClick = useCallback(() => setOpened((opened: any) => !opened), []);
@@ -26,8 +32,8 @@ const Input: FC<IInpitProps> = (
   return (
     <CurrentValue>
         <ValueContainerWrapper ref={valueContainerWrapperRef}>
-        {inputProps.currentMultiValue.length
-            ? inputProps.currentMultiValue.map(
+        {currentMultiValue.length
+            ? currentMultiValue.map(
             (item: any, i: number) => {
                 const label = item.$$typeof ? item.props['data-label'] : item.label;
                 const value = item.$$typeof ? item.props['data-value'] : item.value;
@@ -35,15 +41,15 @@ const Input: FC<IInpitProps> = (
                 return (
                 <Fragment key={value}>
                     <ChipItemCheckbox key={value + '_'}>
-                      {setCounterChip(inputProps.currentMultiValue.length - i)}
+                      {setCounterChip(currentMultiValue.length - i)}
                     </ChipItemCheckbox>
 
                     <ChipItem
                       key={value} value={value} data-is-chip
                       disabled={false}
-                      currentMultiValue={inputProps.currentMultiValue}
-                      setCurrentMultiValue={inputProps.setCurrentMultiValue}
-                      onChange={inputProps.onChange}
+                      currentMultiValue={currentMultiValue}
+                      setCurrentMultiValue={setCurrentMultiValue}
+                      onChange={onChange}
                     >
                     {label}
                     </ChipItem>
@@ -56,12 +62,12 @@ const Input: FC<IInpitProps> = (
         <IndicatorsContainerWrapper>
           <CloseIcon
             onClick={handleRemoveAllClick}
-            menuIsOpen={inputProps.opened}
+            menuIsOpen={opened}
             disabled={false}
           >X</CloseIcon>
 
           <ArrowDownIcon
-            menuIsOpen={inputProps.opened}
+            menuIsOpen={opened}
             disabled={false}
           />
         </IndicatorsContainerWrapper>

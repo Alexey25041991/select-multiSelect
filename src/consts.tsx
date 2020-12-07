@@ -1,8 +1,8 @@
 import React from 'react';
-import { MyOptions } from 'types';
+import { MyOptions, ICheckboxGroupItem } from 'types';
 
 
-export const objDataArr: MyOptions[] = [
+export const options: MyOptions[] = [
   {
     label: 'Москва',
     value: 'Moscow',
@@ -13,6 +13,14 @@ export const objDataArr: MyOptions[] = [
     value: 'Paris',
   },
   {
+    label: 'Адлер',
+    value: 'Adler',
+  },
+  {
+    label: 'Воронеж',
+    value: 'Woronej',
+  },
+  {
     label: 'Прага',
     value: 'Prague',
   },
@@ -21,16 +29,16 @@ export const objDataArr: MyOptions[] = [
     value: 'Amsterdam',
   },
   {
-    label: 'Йоханнесбург',
-    value: 'Johannessburg',
+    label: '1',
+    value: '1',
   },
   {
-    label: 'Лондон',
-    value: 'London',
+    label: '2',
+    value: '2',
   },
 ];
 
-export const objDataArr1: MyOptions[] = [
+export const initialValue: MyOptions[] = [
   // {
   //   label: 'Париж',
   //   value: 'Paris',
@@ -54,4 +62,8 @@ export const nodesDataArr: MyOptions[] = [
   <div data-value='Berlin' data-label='Берлин'>Берлин <img src={'https://via.placeholder.com/30x30'} alt='' /></div>,
   <div data-value='London' data-label='Лондон'>Лондон</div>,
   <div data-value='Amsterdam' data-label='Амстердам'>Амстердам</div>,
+];
+
+export const optionsList: ICheckboxGroupItem[] = [
+  { id: 1, label: 'menuOpenAndClose', checked: false },
 ];
