@@ -28,6 +28,9 @@ export const removeOption: any = (list: MyOptions[], value: string) => {
 };
 
 const DropdownList: FC<IDropdownListProps> = ({
+  coordinatesInput: {
+    topInput, bottomInput, leftInput
+  },
   list,
   currentMultiValue,
   setCurrentMultiValue,
@@ -73,47 +76,20 @@ const setOptionContent = (item: any, i: number) => {
     )
   }
 
-  const handleBlur = (e:any): void => {
-    // const { value } = e.target;
-    // setFocused(false);
-    console.log(1111);
-
-    onBlur(e);
-  };
-
-  const onBlur = (e: any ) => {
-    console.log(e.currentTarget.dataset)
-    if (e.currentTarget === e.target) {
-      console.log('фокус на родительском элементе снят');
-    } else {
-      console.log('фокус на дочернем элементе снят', e.target);
-    }
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      // Не срабатывает при перемещении фокуса между дочерними элементами
-      console.log('фокус потерян изнутри родительского элемента');
-    }
-  };
-
-  const onFocus = (e: any) => {
-    console.log(e.currentTarget.dataset)
-    if (e.currentTarget === e.target) {
-      console.log('фокус на родительском элементе снят');
-    } else {
-      console.log('фокус на дочернем элементе снят', e.target);
-    }
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      // Не срабатывает при перемещении фокуса между дочерними элементами
-      console.log('фокус потерян изнутри родительского элемента');
-    }
-  };
-
-
   return (
-    <OptionWrapper id="OptionWrapper" opened={opened} dropdownListBorders={dropdownListBorders} onBlur={handleBlur} onFocus={onFocus} >
-        {list.map(
-            (item: any, i: number) => setOptionContent(item, i)
-        )}
-    </OptionWrapper>
+      <OptionWrapper
+        data-option-wrapper
+        opened={opened}
+        dropdownListBorders={dropdownListBorders}
+        tabIndex={1}
+        leftInput={leftInput}
+        topInput={topInput}
+        bottomInput={bottomInput}
+      >
+          {list.map(
+              (item: any, i: number) => setOptionContent(item, i)
+          )}
+      </OptionWrapper>
   );
 };
 

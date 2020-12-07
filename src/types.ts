@@ -17,8 +17,8 @@ export interface ISelectProps {
   onChange?: (value: any) => void;
    /** Коллбек на изменение блюр */
    onBlur?: (e: FocusEvent) => void;
-   /** Коллбек на изменение focus */
-   onFocus?: (event: FocusEvent) => void;
+     /** Коллбек на изменение focus */
+   onFocus?: (e: FocusEvent) => void;
 };
 
 export interface IChipItemProps {
@@ -48,13 +48,18 @@ export interface IDropdownListProps {
   dropdownListBorders: boolean;
   list: MyOptions[];
   currentMultiValue: MyOptions[];
+  coordinatesInput: {
+    topInput: number;
+    bottomInput: number;
+    leftInput: number;
+  };
   setOpened: (opened: any) => void;
   setCurrentMultiValue: (value: (currentMultiValue: any) => any[]) => void;
   onChange?: (value: any) => void;
-     /** Коллбек на изменение блюр */
-     onBlur?: (e: FocusEvent) => void;
-     /** Коллбек на изменение focus */
-     onFocus?: (event: FocusEvent) => void;
+    //  /** Коллбек на изменение блюр */
+    //  onBlur?: (e: FocusEvent) => void;
+    //  /** Коллбек на изменение focus */
+    //  onFocus?: (e: FocusEvent) => void;
 };
 
 export interface ICheckboxGroupItem {

@@ -29,7 +29,7 @@ const App = () => {
             flexDirection: 'column',
           }}>
           <MySelect
-            width={'450px'}
+            width={'300px'}
             options={options}
             initialValue={initialValue}
             menuOpenAndClose={firstItemOpened}

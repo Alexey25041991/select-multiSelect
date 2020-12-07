@@ -19,6 +19,9 @@ interface IIconProps {
 interface IIconProps1 {
   dropdownListBorders: boolean;
   opened: boolean;
+  leftInput: number;
+  topInput: number;
+  bottomInput: number;
 }
 
 interface IChipItemLabelProps {
@@ -257,10 +260,13 @@ export const CloseIcon = styled.div<IIconProps>`
 `;
 
 export const OptionWrapper = styled.div<IIconProps1>`
-  position: absolute;
-  width: 100%;
-  top: 100%;
-  left: 0;
+  position: fixed;
+  width: 320px;
+  ${({ leftInput, topInput, bottomInput }) => css`
+    top: ${bottomInput + 'px'};
+    left: ${leftInput + 'px'};
+    }
+  `}
   border: 1px solid #D8D8D8;
   z-index: 1000;
   height: 200px;
