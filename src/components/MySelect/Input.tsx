@@ -13,6 +13,7 @@ const Input: FC<IInpitProps> = (
     initialValueOptions,
     currentMultiValue,
     setCurrentMultiValue,
+    maxWidthChip,
     opened,
     onChange,
   }}
@@ -48,6 +49,7 @@ const Input: FC<IInpitProps> = (
                       key={value} value={value} data-is-chip
                       disabled={false}
                       currentMultiValue={currentMultiValue}
+                      maxWidthChip={maxWidthChip}
                       setCurrentMultiValue={setCurrentMultiValue}
                       onChange={onChange}
                     >

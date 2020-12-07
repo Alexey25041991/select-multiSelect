@@ -29,20 +29,22 @@ const App = () => {
             flexDirection: 'column',
           }}>
           <MySelect
-            width={450}
+            width={'450px'}
             options={options}
             initialValue={initialValue}
             menuOpenAndClose={firstItemOpened}
             className={'select'}
             onChange={(value) => console.log('Value from changed input', value)}
+            maxWidthChip={'50px'}
           />
           <MySelect
-            width={450}
+            width={'400px'}
             options={options}
             initialValue={initialValue}
             menuOpenAndClose={firstItemOpened}
             className={'select'}
             onChange={(value) => console.log('Value from changed input', value)}
+            maxWidthChip={'100px'}
           />
           </div>
           <CheckboxInput>

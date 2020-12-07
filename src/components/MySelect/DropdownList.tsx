@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
 
 import { IDropdownListProps } from 'types';
-import {  OptionWrapper, OptionContent, Checkbox, } from './styled';
+import {  OptionWrapper, OptionContent, Checkbox, OptionContentLabel, } from './styled';
 
   import { MyOptions } from 'types';
 
@@ -68,13 +68,34 @@ const setOptionContent = (item: any, i: number) => {
         <Checkbox style={{ pointerEvents: 'none' }}>
           <input type='checkbox' checked={!!findOption(currentMultiValue, itemType)} readOnly />
         </Checkbox>
-        {itemLabel}
+        <OptionContentLabel>{itemLabel}</OptionContentLabel>
       </OptionContent>
     )
   }
 
-  const onBlur = (e: any) => {
-    console.log(e.currentTarget)
+  const handleBlur = (e:any): void => {
+    // const { value } = e.target;
+    // setFocused(false);
+    console.log(1111);
+
+    onBlur(e);
+  };
+
+  const onBlur = (e: any ) => {
+    console.log(e.currentTarget.dataset)
+    if (e.currentTarget === e.target) {
+      console.log('фокус на родительском элементе снят');
+    } else {
+      console.log('фокус на дочернем элементе снят', e.target);
+    }
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      // Не срабатывает при перемещении фокуса между дочерними элементами
+      console.log('фокус потерян изнутри родительского элемента');
+    }
+  };
+
+  const onFocus = (e: any) => {
+    console.log(e.currentTarget.dataset)
     if (e.currentTarget === e.target) {
       console.log('фокус на родительском элементе снят');
     } else {
@@ -88,7 +109,7 @@ const setOptionContent = (item: any, i: number) => {
 
 
   return (
-    <OptionWrapper id="OptionWrapper" opened={opened} dropdownListBorders={dropdownListBorders} onBlur={onBlur}>
+    <OptionWrapper id="OptionWrapper" opened={opened} dropdownListBorders={dropdownListBorders} onBlur={handleBlur} onFocus={onFocus} >
         {list.map(
             (item: any, i: number) => setOptionContent(item, i)
         )}

@@ -48,7 +48,7 @@ export const initialValue: MyOptions[] = [
   //   value: 'Moscow',
   // },
   {
-    label: 'Смоленск',
+    label: 'Смоленск Смоленск Смоленск Смоленск Смоленск Смоленск Смоленск Смоленск',
     value: 'Smolensk',
   },
   <div data-value='sohi' data-label='Сочи'>Сочи <img src={'https://via.placeholder.com/30x30'} alt='' /></div>,

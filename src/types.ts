@@ -7,12 +7,13 @@ export interface ISelectItem {
 export type MyOptions = ISelectItem | React.ReactNode;
 
 export interface ISelectProps {
-  width?: number;
+  width?: string;
   options: MyOptions[];
   initialValue?: MyOptions[];
   isMulti?: boolean;
   menuOpenAndClose?: boolean;
   className?: string;
+  maxWidthChip?: string;
   onChange?: (value: any) => void;
    /** Коллбек на изменение блюр */
    onBlur?: (e: FocusEvent) => void;
@@ -24,6 +25,7 @@ export interface IChipItemProps {
   value: string | number;
   disabled?: boolean;
   currentMultiValue: MyOptions[];
+  maxWidthChip?: string;
   setCurrentMultiValue: (value: MyOptions[]) => void;
   onChange?: (value: any) => void;
 };
@@ -35,6 +37,7 @@ export interface IInpitProps {
     initialValueOptions: MyOptions[];
     setCurrentMultiValue: (value: MyOptions[]) => void;
     opened?: boolean;
+    maxWidthChip?: string;
     onChange?: (value: any) => void;
   };
 };

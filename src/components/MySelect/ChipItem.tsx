@@ -13,6 +13,7 @@ const ChipItem: React.FC<IChipItemProps> = ({
   children, value, disabled,
   currentMultiValue,
   setCurrentMultiValue,
+  maxWidthChip,
   onChange,
   ...restProps
 }) => {
@@ -28,7 +29,7 @@ const ChipItem: React.FC<IChipItemProps> = ({
 
   return (
     <ChipItemWrapper {...restProps}>
-      <ChipItemLabel>{children}</ChipItemLabel>
+      <ChipItemLabel maxWidthChip={maxWidthChip}>{children}</ChipItemLabel>
 
       <CloseIconContainer>
         <CloseSolidIcon

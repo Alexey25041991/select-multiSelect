@@ -10,7 +10,7 @@ import {
 } from './styled';
 
 const MySelect: React.FC<ISelectProps> = ({
-  width, options, menuOpenAndClose, initialValue, onChange, className
+  width, options, menuOpenAndClose, initialValue, maxWidthChip, onChange, className, onBlur, onFocus
 }) => {
   // Ref to container
   const initialValueOptions = initialValue ? initialValue : [];
@@ -86,6 +86,8 @@ const MySelect: React.FC<ISelectProps> = ({
     setCurrentMultiValue,
     opened,
     onChange,
+    maxWidthChip,
+    width
   }
 
   // @ts-ignore
@@ -107,6 +109,8 @@ const MySelect: React.FC<ISelectProps> = ({
           onChange={onChange}
           dropdownListBorders={dropdownListBorders}
           opened={opened}
+          onBlur={onBlur}
+          onFocus={onFocus}
         />
       </SelectContainer>
 

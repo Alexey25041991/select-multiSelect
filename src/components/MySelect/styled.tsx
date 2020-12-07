@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 // import {CloseOutlineIcon} from '../Icons/CloseOutlineIcon';
 
 interface ISelectWrapperProps {
-  width?: number;
+  width?: string;
 };
 
 interface IIconProps {
@@ -21,8 +21,13 @@ interface IIconProps1 {
   opened: boolean;
 }
 
+interface IChipItemLabelProps {
+  maxWidthChip?: string;
+}
+
+
 export const SelectWrapper = styled.div<ISelectWrapperProps>`
-  width: ${props => props.width ? props.width : 320}px;
+  width: ${({ width }) => width};
   position: relative;
   height: 120px;
 }
@@ -111,7 +116,7 @@ export const ChipItemWrapper = styled.div`
   // overflow: hidden;
 `;
 
-export const ChipItemLabel = styled.div`
+export const ChipItemLabel = styled.div<IChipItemLabelProps>`
   position: relative;
   // overflow: hidden;
   box-sizing: border-box;
@@ -128,6 +133,12 @@ export const ChipItemLabel = styled.div`
   flex: 0 0 auto;
   margin: 4px 8px 4px 4px;
   overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  // max-width: 120px;
+  max-width: ${({ maxWidthChip }) => maxWidthChip};
   & > div {
     display: flex;
     align-items: center;
@@ -320,6 +331,24 @@ export const Checkbox = styled.div`
   width: 5px;
   height: 5px;
   margin-right: 10px;
+`;
+
+export const OptionContentLabel = styled.div`
+  pointer-events: none;
+  // display: flex;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 4px 8px;
+  width: 100%;
+  text-overflow: ellipsis;
+  align-items: center;
+  & div:first-child {
+    padding-right: 8px;
+  }
 `;
 
 export const CheckboxInput = styled.div`
