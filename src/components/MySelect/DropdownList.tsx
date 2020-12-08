@@ -37,6 +37,7 @@ const DropdownList: FC<IDropdownListProps> = ({
   setOpened,
   onChange,
   dropdownListBorders,
+  widthDropdownList,
   opened,
 }) => {
 
@@ -85,6 +86,7 @@ const setOptionContent = (item: any, i: number) => {
         leftInput={leftInput}
         topInput={topInput}
         bottomInput={bottomInput}
+        widthDropdownList={widthDropdownList}
       >
           {list.map(
               (item: any, i: number) => setOptionContent(item, i)

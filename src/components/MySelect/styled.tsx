@@ -22,6 +22,7 @@ interface IIconProps1 {
   leftInput: number;
   topInput: number;
   bottomInput: number;
+  widthDropdownList?: string
 }
 
 interface IChipItemLabelProps {
@@ -262,9 +263,11 @@ export const CloseIcon = styled.div<IIconProps>`
 export const OptionWrapper = styled.div<IIconProps1>`
   position: fixed;
   width: 320px;
-  ${({ leftInput, topInput, bottomInput }) => css`
+  
+  ${({ leftInput, topInput, bottomInput, widthDropdownList }) => css`
     top: ${bottomInput + 'px'};
     left: ${leftInput + 'px'};
+    width: ${widthDropdownList};
     }
   `}
   border: 1px solid #D8D8D8;
@@ -314,11 +317,11 @@ export const OptionWrapper = styled.div<IIconProps1>`
     background-color: #f0f5f7;
     color: #7E7E7E;
   }
-  ${({ dropdownListBorders }) =>
+  ${({ dropdownListBorders, topInput }) =>
   dropdownListBorders &&
   css`
     top: auto;
-    bottom: 56px;
+    bottom: ${topInput + 'px'};
   `}
 `;
 

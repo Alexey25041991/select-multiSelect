@@ -36,6 +36,7 @@ const App = () => {
             className={'select'}
             onChange={(value) => console.log('Value from changed input', value)}
             maxWidthChip={'50px'}
+            widthDropdownList={'350px'}
           />
           <MySelect
             width={'400px'}
@@ -45,6 +46,7 @@ const App = () => {
             className={'select'}
             onChange={(value) => console.log('Value from changed input', value)}
             maxWidthChip={'100px'}
+            widthDropdownList={'450px'}
           />
           </div>
           <CheckboxInput>

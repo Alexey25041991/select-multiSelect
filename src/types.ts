@@ -14,6 +14,7 @@ export interface ISelectProps {
   menuOpenAndClose?: boolean;
   className?: string;
   maxWidthChip?: string;
+  widthDropdownList?: string;
   onChange?: (value: any) => void;
    /** Коллбек на изменение блюр */
    onBlur?: (e: FocusEvent) => void;
@@ -46,6 +47,7 @@ export interface IDropdownListProps {
   disabled?: boolean;
   opened: boolean;
   dropdownListBorders: boolean;
+  widthDropdownList?: string;
   list: MyOptions[];
   currentMultiValue: MyOptions[];
   coordinatesInput: {

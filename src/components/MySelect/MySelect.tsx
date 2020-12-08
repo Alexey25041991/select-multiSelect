@@ -10,7 +10,7 @@ import {
 } from './styled';
 
 const MySelect: React.FC<ISelectProps> = ({
-  width, options, menuOpenAndClose, initialValue, maxWidthChip, onChange, className,
+  width, options, menuOpenAndClose, initialValue, maxWidthChip, onChange, className, widthDropdownList,
 }) => {
   // Ref to container
   const initialValueOptions = initialValue ? initialValue : [];
@@ -26,52 +26,19 @@ const MySelect: React.FC<ISelectProps> = ({
   const [ currentMultiValue, setCurrentMultiValue ] = useState<MyOptions[]>(initialValueOptions);
   const [ coordinatesInput, setСoordinatesInput ] = useState<any>({});
 
+  console.log('dropdownListBorders', dropdownListBorders)
+
   // TODO: Вынести в хуки
   // Click outside select
   useEffect(() => {
     !!menuOpenAndClose && setOpened(menuOpenAndClose)
+    setСoordinatesInput(coordinatesInput)
   });
 
   const handleSelectWrapperClick = useCallback((e) => {
     e.stopPropagation();
-
-    const a = document.querySelector('[data-option-wrapper]');
-    const b = document.documentElement.clientHeight;
-
-
-    if(a) {
-      const getCoords = (a: any , b: any) => {
-        let boxOption = a.getBoundingClientRect();
-
-        const top = boxOption.top
-        const bottom = boxOption.top + boxOption.height;
-        const bottomHeightBorder = b - bottom
-        const bottomHeight = b - boxOption.top
-        const bottomSwitch = Math.abs(top) > Math.abs(bottomHeight);
-
-        if(bottomHeightBorder < 0 ) {
-          setDropdownListMoveBorders(true);
-        }
-
-        if(bottomHeightBorder - 72 - 2> boxOption.height) {
-          setDropdownListMoveBorders(false);
-        }
-
-        return {
-          top: top,
-          bottom: bottom,
-          bottomHeightBorder: bottomHeightBorder,
-          bottomHeight: bottomHeight,
-          bottomSwitch: bottomSwitch,
-        };
-      }
-      console.log('???getCoords', getCoords(a, b))
-
-    }
-
     menuOpenAndClose? setOpened(menuOpenAndClose) : setOpened((opened: any) => !opened)
     // setOpened((opened: any) => !opened)
-
   }, [menuOpenAndClose]);
 
   const inputProps = {
@@ -93,16 +60,38 @@ const MySelect: React.FC<ISelectProps> = ({
   const onFocus = (e: any) => {
     if (e.currentTarget === e.target) {
       let boxInput = e.target.getBoundingClientRect()
+      const boxOption = e.target.children[1].getBoundingClientRect();
+      const b = document.documentElement.clientHeight;
+
       const topInput = boxInput.top
       const bottomInput = boxInput.top + boxInput.height;
       const leftInput = boxInput.left;
       setСoordinatesInput({topInput, bottomInput, leftInput})
-    }
+
+      console.log('boxInput', topInput, bottomInput, leftInput)
+
+      if(boxOption) {
+        const top = boxOption.top
+        const bottom = boxOption.top + boxOption.height;
+        const bottomHeightBorder = b - bottom
+        const bottomHeight = b - boxOption.top
+
+        console.log('boxOption', top, bottom, bottomHeightBorder, bottomHeight)
+
+        if(bottomHeightBorder < 0 ) {
+          setDropdownListMoveBorders(true);
+        }
+
+        if(bottomHeightBorder - 72 - 2> boxOption.height) {
+          setDropdownListMoveBorders(false);
+        }
+      }
+    } 
   };
 
   // @ts-ignore
   return (
-    <SelectWrapper className={className} width={width} data-close-border>
+    <SelectWrapper className={className} width={width} data-close-border >
       <Label disabled={false}>
         Город
       </Label>
@@ -114,7 +103,6 @@ const MySelect: React.FC<ISelectProps> = ({
         onBlur={onBlur}
         onFocus={onFocus}
       >
-
         <Input inputProps = {inputProps}/>
 
         <DropdownList
@@ -126,6 +114,7 @@ const MySelect: React.FC<ISelectProps> = ({
           onChange={onChange}
           dropdownListBorders={dropdownListBorders}
           opened={opened}
+          widthDropdownList={widthDropdownList}
         />
       </SelectContainer>
 
